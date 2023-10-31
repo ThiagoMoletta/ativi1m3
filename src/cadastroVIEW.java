@@ -164,7 +164,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "O valor deve ser um número válido.");
+            JOptionPane.showMessageDialog(null, "valor deve ser um número válido.");
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto: " + ex.getMessage());

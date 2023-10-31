@@ -34,7 +34,7 @@ public void cadastrarProduto(ProdutosDTO produto) throws SQLException {
         preparedStatement.setString(3, produto.getStatus());
 
         preparedStatement.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
+        JOptionPane.showMessageDialog(null, "Produto cadastrado");
     } finally {
         // Certifique-se de fechar o PreparedStatement e a conexão em um bloco finally.
         if (preparedStatement != null) {
@@ -47,7 +47,7 @@ public void cadastrarProduto(ProdutosDTO produto) throws SQLException {
 }
 
     ArrayList<ProdutosDTO> listarProdutos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet"); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     
