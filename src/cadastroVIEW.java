@@ -1,3 +1,6 @@
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -140,34 +143,44 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        ProdutosDTO produto = new ProdutosDTO();
-        String nome = cadastroNome.getText();
-        String valor = cadastroValor.getText();
-        String status = "A Venda";
-        produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
-        
-        ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
+     String nome = cadastroNome.getText();
+        String valorStr = cadastroValor.getText();
+
+        if (nome.isEmpty() || valorStr.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
+            return;
+        }
+
+        try {
+            int valor = Integer.parseInt(valorStr);
+
+            ProdutosDTO produto = new ProdutosDTO();
+            produto.setNome(nome);
+            produto.setValor(valor);
+            produto.setStatus("A Venda");
+
+            ProdutosDAO produtodao = new ProdutosDAO();
+            produtodao.cadastrarProduto(produto);
+
+            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "O valor deve ser um número válido.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto: " + ex.getMessage());
+        }
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
-        listagemVIEW listagem = new listagemVIEW(); 
-        listagem.setVisible(true);
+
     }//GEN-LAST:event_btnProdutosActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -183,9 +196,8 @@ public class cadastroVIEW extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(cadastroVIEW.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
+        // Inicializa a interface gráfica
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new cadastroVIEW().setVisible(true);
