@@ -1,5 +1,9 @@
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -136,9 +140,15 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+            String id = id_produto_venda.getText();
+                ProdutosDAO produtosdao = new ProdutosDAO();
+        try {
+            produtosdao.venderProduto(Integer.parseInt(id));
+        } catch (SQLException ex) {
+            Logger.getLogger(listagemVIEW.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        ProdutosDAO produtosdao = new ProdutosDAO();
+        
         
         //produtosdao.venderProduto(Integer.parseInt(id));
         listarProdutos();
@@ -202,15 +212,13 @@ public class listagemVIEW extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void listarProdutos(){
-        try {
+try {
             ProdutosDAO produtosdao = new ProdutosDAO();
-            
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
-            
             ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
+
+            for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
                     listagem.get(i).getId(),
                     listagem.get(i).getNome(),
@@ -219,7 +227,8 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
         }
-    
+
     }
 }

@@ -22,6 +22,10 @@ public class ProdutosDAO {
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
+        public ProdutosDAO() {
+        conn = new conectaDAO().connectDB(); // Inicialize a conexão no construtor
+    }
+    
 public void cadastrarProduto(ProdutosDTO produto) throws SQLException {
     conn = new conectaDAO().connectDB();
     String sql = "INSERT INTO tb_leilao (nome, valor, status) VALUES (?, ?, ?)";
@@ -45,14 +49,74 @@ public void cadastrarProduto(ProdutosDTO produto) throws SQLException {
         }
     }
 }
+public void venderProduto(int idProduto) throws SQLException {
+    conn = new conectaDAO().connectDB();
+    String sql = "UPDATE tb_leilao SET status = ? WHERE id = ?";
+    PreparedStatement preparedStatement = null;
 
-    ArrayList<ProdutosDTO> listarProdutos() {
-        throw new UnsupportedOperationException("Not supported yet"); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try {
+        preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, "Vendido");
+        preparedStatement.setInt(2, idProduto);
+
+        int rowsUpdated = preparedStatement.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado ou não pôde ser vendido.");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
+    } finally {
+        if (preparedStatement != null) {
+            preparedStatement.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
     }
+}
+
+   public ArrayList<ProdutosDTO> listarProdutos() {
+        ArrayList<ProdutosDTO> listaProdutos = new ArrayList<>();
+
+          try {
+            String sql = "SELECT id, nome, valor, status FROM tb_leilao";
+            prep = conn.prepareStatement(sql);
+            resultset = prep.executeQuery();
+
+            while (resultset.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("status"));
+                listaProdutos.add(produto);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+
+        return listaProdutos;
+    }
+
+    private void closeConnection() {
+        try {
+            if (resultset != null) resultset.close();
+            if (prep != null) prep.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + e.getMessage());
+        }
+    }
+}
 
     
     
     
         
-}
+
 
