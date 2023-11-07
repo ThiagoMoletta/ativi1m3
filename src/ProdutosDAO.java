@@ -78,6 +78,32 @@ public void venderProduto(int idProduto) throws SQLException {
     }
 }
 
+public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+    ArrayList<ProdutosDTO> listaProdutosVendidos = new ArrayList<>();
+
+    try {
+        // Consulta SQL para selecionar apenas produtos com status "Vendido"
+        String sql = "SELECT id, nome, valor, status FROM tb_leilao WHERE status = 'Vendido'";
+        prep = conn.prepareStatement(sql);
+        resultset = prep.executeQuery();
+
+        while (resultset.next()) {
+            ProdutosDTO produto = new ProdutosDTO();
+            produto.setId(resultset.getInt("id"));
+            produto.setNome(resultset.getString("nome"));
+            produto.setValor(resultset.getInt("valor"));
+            produto.setStatus(resultset.getString("status"));
+            listaProdutosVendidos.add(produto);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Erro ao listar produtos vendidos: " + e.getMessage());
+    } finally {
+        closeConnection();
+    }
+
+    return listaProdutosVendidos;
+}
+
    public ArrayList<ProdutosDTO> listarProdutos() {
         ArrayList<ProdutosDTO> listaProdutos = new ArrayList<>();
 
