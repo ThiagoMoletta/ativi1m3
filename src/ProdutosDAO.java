@@ -135,7 +135,7 @@ public ArrayList<ProdutosDTO> listarProdutosVendidos() {
             if (prep != null) prep.close();
             if (conn != null) conn.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexuo: " + e.getMessage());
         }
     }
 }
