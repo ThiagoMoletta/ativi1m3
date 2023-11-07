@@ -64,7 +64,7 @@ public void venderProduto(int idProduto) throws SQLException {
         if (rowsUpdated > 0) {
             JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(null, "Produto não encontrado ou não pôde ser vendido.");
+            JOptionPane.showMessageDialog(null, "Produto não encontrado ou não pôde ser vendido");
         }
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());

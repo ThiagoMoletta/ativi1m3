@@ -119,7 +119,7 @@ private void btnConsultarVendidosActionPerformed(java.awt.event.ActionEvent evt)
             });
         }
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Erro ao lista produtos vendidos: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Erro ao lista produtos vendidos:" + e.getMessage());
     }
 }
        

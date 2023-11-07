@@ -160,7 +160,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String valorStr = cadastroValor.getText();
 
         if (nome.isEmpty() || valorStr.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
+            JOptionPane.showMessageDialog(null, "Preencha todos os camposs");
             return;
         }
 
@@ -175,9 +175,9 @@ public class cadastroVIEW extends javax.swing.JFrame {
             ProdutosDAO produtodao = new ProdutosDAO();
             produtodao.cadastrarProduto(produto);
 
-            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
+            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "valor deve ser um numero válido.");
+            JOptionPane.showMessageDialog(null, "valor deve ser um numero válido");
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto: " + ex.getMessage());
